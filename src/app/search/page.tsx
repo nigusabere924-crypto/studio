@@ -16,17 +16,23 @@ export default async function SearchPage({
   let products: ProductWithShop[] = [];
 
   if (query) {
-    aiResponse = await translateAndUnderstandSearchQuery({ query });
-    const allProducts = getProducts();
-    
-    if (aiResponse.understoodQuery) {
-        const searchTerms = aiResponse.understoodQuery.toLowerCase().split(',').map(term => term.trim()).filter(term => term.length > 1);
-        products = allProducts.filter(p => {
-            const productName = p.name.toLowerCase();
-            return searchTerms.some(term => productName.includes(term));
-        });
+    try {
+        aiResponse = await translateAndUnderstandSearchQuery({ query });
+        const allProducts = getProducts();
+        
+        if (aiResponse && aiResponse.understoodQuery) {
+            const searchTerms = aiResponse.understoodQuery.toLowerCase().split(',').map(term => term.trim()).filter(Boolean);
+            if (searchTerms.length > 0) {
+                products = allProducts.filter(p => {
+                    const productName = p.name.toLowerCase();
+                    return searchTerms.some(term => productName.includes(term));
+                });
+            }
+        }
+    } catch (error) {
+        console.error("Error during search:", error);
+        // Products will remain an empty array, and the "No Products Found" message will be shown.
     }
-
   }
 
   if (!query) {
@@ -55,14 +61,14 @@ export default async function SearchPage({
             <Languages className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
             <div>
               <h3 className="font-semibold">Translated Query</h3>
-              <p className="text-muted-foreground">{aiResponse?.translatedQuery}</p>
+              <p className="text-muted-foreground">{aiResponse?.translatedQuery ?? '...'}</p>
             </div>
           </div>
           <div className="flex items-start gap-3">
             <Bot className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
             <div>
               <h3 className="font-semibold">AI Understood Query</h3>
-              <p className="text-muted-foreground">{aiResponse?.understoodQuery}</p>
+              <p className="text-muted-foreground">{aiResponse?.understoodQuery ?? '...'}</p>
             </div>
           </div>
         </div>
