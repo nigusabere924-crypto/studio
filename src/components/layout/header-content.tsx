@@ -16,15 +16,17 @@ export default function HeaderContent() {
           </span>
         </Link>
         <nav className="flex items-center gap-2 sm:gap-4">
-          <Link href="/" passHref legacyBehavior>
-            <Button as="a" variant="ghost" className="hidden sm:inline-flex">
-              Search
+          <Link href="/" passHref>
+            <Button asChild variant="ghost" className="hidden sm:inline-flex">
+              <a>Search</a>
             </Button>
           </Link>
-          <Link href="/dashboard" passHref legacyBehavior>
-            <Button as="a" variant="outline">
-              <Store className="sm:mr-2" />
-              <span className="hidden sm:inline">Shop Dashboard</span>
+          <Link href="/dashboard" passHref>
+            <Button asChild variant="outline">
+              <a>
+                <Store className="sm:mr-2" />
+                <span className="hidden sm:inline">Shop Dashboard</span>
+              </a>
             </Button>
           </Link>
         </nav>
