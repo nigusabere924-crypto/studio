@@ -14,24 +14,32 @@ export default async function SearchPage({
   const query = searchParams.q || '';
   let aiResponse: { translatedQuery: string; understoodQuery: string } | null = null;
   let products: ProductWithShop[] = [];
+  let searchError = false;
 
   if (query) {
     try {
-        aiResponse = await translateAndUnderstandSearchQuery({ query });
-        const allProducts = getProducts();
-        
-        if (aiResponse && aiResponse.understoodQuery) {
-            const searchTerms = aiResponse.understoodQuery.toLowerCase().split(',').map(term => term.trim()).filter(Boolean);
-            if (searchTerms.length > 0) {
-                products = allProducts.filter(p => {
-                    const productName = p.name.toLowerCase();
-                    return searchTerms.some(term => productName.includes(term));
-                });
-            }
+      aiResponse = await translateAndUnderstandSearchQuery({ query });
+      const allProducts = getProducts();
+
+      if (aiResponse && aiResponse.understoodQuery) {
+        const searchTerms = aiResponse.understoodQuery
+          .toLowerCase()
+          .split(',')
+          .map((term) => term.trim())
+          .filter(Boolean);
+        if (searchTerms.length > 0) {
+          products = allProducts.filter((p) => {
+            const productName = p.name.toLowerCase();
+            return searchTerms.some((term) => productName.includes(term));
+          });
         }
+      }
     } catch (error) {
-        console.error("Error during search:", error);
-        // Products will remain an empty array, and the "No Products Found" message will be shown.
+      console.error('Error during AI-powered search:', error);
+      searchError = true;
+      // As a fallback, perform a simple keyword search on the original query
+      const allProducts = getProducts();
+      products = allProducts.filter(p => p.name.toLowerCase().includes(query.toLowerCase()));
     }
   }
 
@@ -39,11 +47,16 @@ export default async function SearchPage({
     return (
       <div className="text-center py-10">
         <Search className="mx-auto h-12 w-12 text-muted-foreground" />
-        <h2 className="mt-4 text-2xl font-headline font-semibold">Start a new search</h2>
+        <h2 className="mt-4 text-2xl font-headline font-semibold">
+          Start a new search
+        </h2>
         <p className="mt-2 text-muted-foreground">
           Use the search bar above to find products.
         </p>
-        <Link href="/" className="mt-4 inline-block bg-primary text-primary-foreground px-4 py-2 rounded-md">
+        <Link
+          href="/"
+          className="mt-4 inline-block bg-primary text-primary-foreground px-4 py-2 rounded-md"
+        >
           Back to Home
         </Link>
       </div>
@@ -56,22 +69,32 @@ export default async function SearchPage({
         <h2 className="text-sm font-semibold text-muted-foreground mb-2">
           Your Search: "{query}"
         </h2>
-        <div className="grid md:grid-cols-2 gap-4">
-          <div className="flex items-start gap-3">
-            <Languages className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
-            <div>
-              <h3 className="font-semibold">Translated Query</h3>
-              <p className="text-muted-foreground">{aiResponse?.translatedQuery ?? '...'}</p>
+        {searchError ? (
+           <div className="text-destructive text-sm">
+             Could not connect to the AI search service. Showing basic results.
+           </div>
+        ) : (
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="flex items-start gap-3">
+              <Languages className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+              <div>
+                <h3 className="font-semibold">Translated Query</h3>
+                <p className="text-muted-foreground">
+                  {aiResponse?.translatedQuery ?? '...'}
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <Bot className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+              <div>
+                <h3 className="font-semibold">AI Understood Query</h3>
+                <p className="text-muted-foreground">
+                  {aiResponse?.understoodQuery ?? '...'}
+                </p>
+              </div>
             </div>
           </div>
-          <div className="flex items-start gap-3">
-            <Bot className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
-            <div>
-              <h3 className="font-semibold">AI Understood Query</h3>
-              <p className="text-muted-foreground">{aiResponse?.understoodQuery ?? '...'}</p>
-            </div>
-          </div>
-        </div>
+        )}
       </div>
       <ProductList initialProducts={products} />
     </div>
