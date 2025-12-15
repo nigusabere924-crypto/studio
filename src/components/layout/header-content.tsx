@@ -18,15 +18,15 @@ export default function HeaderContent() {
         <nav className="flex items-center gap-2 sm:gap-4">
           <Link href="/" passHref>
             <Button asChild variant="ghost" className="hidden sm:inline-flex">
-              <a>Search</a>
+              <span>Search</span>
             </Button>
           </Link>
           <Link href="/dashboard" passHref>
-            <Button asChild variant="outline">
-              <a>
+            <Button asChild>
+              <span>
                 <Store className="sm:mr-2" />
                 <span className="hidden sm:inline">Shop Dashboard</span>
-              </a>
+              </span>
             </Button>
           </Link>
         </nav>
