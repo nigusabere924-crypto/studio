@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
-import { Search, Mic } from 'lucide-react';
+import { Search, Mic, LoaderCircle } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
@@ -11,11 +11,14 @@ export default function SearchForm() {
   const [query, setQuery] = useState('');
   const router = useRouter();
   const { toast } = useToast();
+  const [isPending, startTransition] = useTransition();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!query.trim()) return;
-    router.push(`/search?q=${encodeURIComponent(query)}`);
+    startTransition(() => {
+      router.push(`/search?q=${encodeURIComponent(query)}`);
+    });
   };
 
   const handleVoiceSearch = () => {
@@ -56,8 +59,13 @@ export default function SearchForm() {
             type="submit"
             className="rounded-full font-bold bg-accent hover:bg-accent/90"
             aria-label="Submit search"
+            disabled={isPending}
           >
-            Search
+            {isPending ? (
+              <LoaderCircle className="animate-spin" />
+            ) : (
+              'Search'
+            )}
           </Button>
         </div>
       </div>
