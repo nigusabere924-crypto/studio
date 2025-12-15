@@ -38,7 +38,7 @@ export default function SearchForm() {
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
         <Input
           type="search"
-          placeholder="Search in any local language (e.g., 'buna', 'dabo')"
+          placeholder="Search in Amharic, Oromo, Tigrinya, or English..."
           className="w-full pl-10 pr-20 py-6 text-base rounded-full shadow-lg"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
