@@ -58,9 +58,10 @@ Translation and Understanding:
 - Map any colloquial terms to their standard product names.
 - Provide the translated and understood query.
 
+Example: If the user searches for "buna", the understood query should be "coffee". If the user searches for "dabo", the understood query should be "bread".
+
 Output:
-Translated Query: The translated search query in English.
-Understood Query: The understood search query, mapping colloquial terms to standard product names.
+Provide a JSON object with 'translatedQuery' and 'understoodQuery' fields.
 `,
 });
 
