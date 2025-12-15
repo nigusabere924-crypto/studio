@@ -1,3 +1,5 @@
+'use client';
+
 import SearchForm from '@/components/search-form';
 import { Bot } from 'lucide-react';
 
