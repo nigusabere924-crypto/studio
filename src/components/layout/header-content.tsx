@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { Leaf, Store } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 export default function HeaderContent() {
   return (
@@ -15,15 +16,17 @@ export default function HeaderContent() {
           </span>
         </Link>
         <nav className="flex items-center gap-2 sm:gap-4">
-          <Button variant="ghost" asChild className="hidden sm:inline-flex">
-            <Link href="/">Search</Link>
-          </Button>
-          <Button variant="outline" asChild>
-            <Link href="/dashboard">
+          <Link href="/" passHref legacyBehavior>
+            <Button as="a" variant="ghost" className="hidden sm:inline-flex">
+              Search
+            </Button>
+          </Link>
+          <Link href="/dashboard" passHref legacyBehavior>
+            <Button as="a" variant="outline">
               <Store className="sm:mr-2" />
               <span className="hidden sm:inline">Shop Dashboard</span>
-            </Link>
-          </Button>
+            </Button>
+          </Link>
         </nav>
       </div>
     </header>
