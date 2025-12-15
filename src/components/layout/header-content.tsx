@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Leaf, Store } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { buttonVariants } from '@/components/ui/button';
 
 export default function HeaderContent() {
   return (
@@ -16,18 +17,12 @@ export default function HeaderContent() {
           </span>
         </Link>
         <nav className="flex items-center gap-2 sm:gap-4">
-          <Link href="/" passHref>
-            <Button asChild variant="ghost" className="hidden sm:inline-flex">
-              <span>Search</span>
-            </Button>
+           <Link href="/" className={cn(buttonVariants({ variant: 'ghost' }), "hidden sm:inline-flex")}>
+              Search
           </Link>
-          <Link href="/dashboard" passHref>
-            <Button asChild>
-              <span>
-                <Store className="sm:mr-2" />
-                <span className="hidden sm:inline">Shop Dashboard</span>
-              </span>
-            </Button>
+          <Link href="/dashboard" className={cn(buttonVariants())}>
+              <Store className="sm:mr-2" />
+              <span className="hidden sm:inline">Shop Dashboard</span>
           </Link>
         </nav>
       </div>
