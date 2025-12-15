@@ -5,7 +5,7 @@
  * It includes:
  * - translateAndUnderstandSearchQuery: The main function to translate and understand the search query.
  * - TranslateAndUnderstandSearchQueryInput: The input type for the translateAndUnderstandSearchQuery function.
- * - TranslateAndUnderstandSearchQueryOutput: The output type for the translateAndUnderstandSearchQuery function.
+ * - TranslateAndUnderstandSearchQueryOutput: The output type for the translateAndunderstandSearchQuery function.
  */
 
 import {ai} from '@/ai/genkit';
@@ -29,7 +29,7 @@ const TranslateAndUnderstandSearchQueryOutputSchema = z.object({
   understoodQuery: z
     .string()
     .describe(
-      'The understood search query, mapping colloquial terms to standard product names.'
+      'A comma-separated list of standard product keywords extracted from the query.'
     ),
 });
 export type TranslateAndUnderstandSearchQueryOutput = z.infer<
@@ -46,22 +46,24 @@ const translateAndUnderstandSearchQueryPrompt = ai.definePrompt({
   name: 'translateAndUnderstandSearchQueryPrompt',
   input: {schema: TranslateAndUnderstandSearchQueryInputSchema},
   output: {schema: TranslateAndUnderstandSearchQueryOutputSchema},
-  prompt: `You are an expert in understanding and translating search queries for an e-commerce platform in Ethiopia.
+  prompt: `You are an expert in understanding conversational search queries for an e-commerce platform in Ethiopia.
 
-The user will provide a search query in Amharic, Tigrinya, Oromo, or English. Your task is to first translate the query to English and then map colloquial terms to standard product names.
+The user will provide a search query in Amharic, Tigrinya, Oromo, or English. It may be a simple keyword or a full sentence. Your task is to:
+1.  Translate the entire query to English.
+2.  Identify the key products or items the user is looking for.
+3.  Map any colloquial or local terms to standard, generic English product names.
+4.  Extract these standard product names into a simple, comma-separated list of keywords.
 
 Original Query: {{{query}}}
 Language: {{{language}}}
 
-Translation and Understanding:
-- Translate the query to English.
-- Map any colloquial terms to their standard product names.
-- Provide the translated and understood query.
-
-Example: If the user searches for "buna", the understood query should be "coffee". If the user searches for "dabo", the understood query should be "bread".
+Examples:
+- If the user searches for "buna", the understood query should be "coffee".
+- If the user searches for "I need to buy some dabo for breakfast", the understood query should be "bread".
+- If the user asks "Can I find fresh tomatoes and onions?", the understood query should be "tomato, onion".
 
 Output:
-Provide a JSON object with 'translatedQuery' and 'understoodQuery' fields.
+Provide a JSON object with 'translatedQuery' (the full English translation) and 'understoodQuery' (the comma-separated keywords).
 `,
 });
 

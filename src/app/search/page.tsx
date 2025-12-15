@@ -20,7 +20,7 @@ export default async function SearchPage({
     const allProducts = getProducts();
     
     if (aiResponse.understoodQuery) {
-        const searchTerms = aiResponse.understoodQuery.toLowerCase().split(' ').filter(term => term.length > 1);
+        const searchTerms = aiResponse.understoodQuery.toLowerCase().split(',').map(term => term.trim()).filter(term => term.length > 1);
         products = allProducts.filter(p => {
             const productName = p.name.toLowerCase();
             return searchTerms.some(term => productName.includes(term));
