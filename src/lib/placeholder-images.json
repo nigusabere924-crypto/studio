@@ -31,6 +31,24 @@
       "imageHint": "spices market"
     },
     {
+      "id": "prod-oil",
+      "description": "A bottle of cooking oil.",
+      "imageUrl": "https://images.unsplash.com/photo-1676751926100-ae4228ba0da4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxjb29raW5nJTIwb2lsfGVufDB8fHx8MTc2NTc5NjY0OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cooking oil"
+    },
+    {
+      "id": "prod-lentils",
+      "description": "A bag of red lentils.",
+      "imageUrl": "https://images.unsplash.com/photo-1614373532201-c40b993f0013?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxyZWQlMjBsZW50aWxzfGVufDB8fHx8MTc2NTgwNjk5NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "red lentils"
+    },
+    {
+      "id": "prod-onions",
+      "description": "A bunch of red onions.",
+      "imageUrl": "https://images.unsplash.com/photo-1588613000160-2b766dd44779?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxyZWQlMjBvbmlvbnN8ZW58MHx8fHwxNzY1ODAzMDUwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "red onions"
+    },
+    {
       "id": "shop-1",
       "description": "Exterior of Merkato General Store.",
       "imageUrl": "https://images.unsplash.com/photo-1744748208552-4592da29b8fe?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxtYXJrZXQlMjBzdGFsbHxlbnwwfHx8fDE3NjU3NzY5Mzd8MA&ixlib=rb-4.1.0&q=80&w=1080",
@@ -47,6 +65,18 @@
       "description": "Exterior of Piassa Spice Corner.",
       "imageUrl": "https://images.unsplash.com/photo-1666017525063-cf8dd5dfdf89?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxzcGljZSUyMHNob3B8ZW58MHx8fHwxNzY1ODAwMzM0fDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "spice shop"
+    },
+    {
+      "id": "shop-4",
+      "description": "Exterior of Saris Market Hub.",
+      "imageUrl": "https://images.unsplash.com/photo-1617339860293-8c1b58e7c4ce?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bG9jYWwlMjBtYXJrZXR8ZW58MHx8fHwxNzY1NjgyNDYzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "local market"
+    },
+    {
+      "id": "shop-5",
+      "description": "Exterior of Ayat Neighborhood Mart.",
+      "imageUrl": "https://images.unsplash.com/photo-1645717477377-dbd78b7f9065?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxjb3JuZXIlMjBzdG9yZXxlbnwwfHx8fDE3NjU4MDY5OTV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "corner store"
     }
   ]
 }
