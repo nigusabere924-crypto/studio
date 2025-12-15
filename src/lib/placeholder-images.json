@@ -1,3 +1,52 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "prod-coffee",
+      "description": "A bag of Ethiopian coffee beans.",
+      "imageUrl": "https://images.unsplash.com/photo-1587049016823-69ef9d68bd44?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxjb2ZmZWUlMjBiZWFuc3xlbnwwfHx8fDE3NjU3NDA4Nzd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "coffee beans"
+    },
+    {
+      "id": "prod-bread",
+      "description": "A loaf of traditional Ethiopian bread.",
+      "imageUrl": "https://images.unsplash.com/photo-1586765501508-cffc1fe200c8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxicmVhZCUyMGxvYWZ8ZW58MHx8fHwxNzY1Njg2MzU5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "bread loaf"
+    },
+    {
+      "id": "prod-honey",
+      "description": "A jar of golden Ethiopian honey.",
+      "imageUrl": "https://images.unsplash.com/photo-1629240830845-e4a550a6bbde?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxob25leSUyMGphcnxlbnwwfHx8fDE3NjU3Nzc4ODN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "honey jar"
+    },
+    {
+      "id": "prod-teff",
+      "description": "A bowl of teff grains.",
+      "imageUrl": "https://images.unsplash.com/photo-1598371624473-4d95aca694e3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Z3JhaW4lMjBib3dsfGVufDB8fHx8MTc2NTgwMDMzNHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "grain bowl"
+    },
+    {
+      "id": "prod-spices",
+      "description": "A collection of colorful Ethiopian spices.",
+      "imageUrl": "https://images.unsplash.com/photo-1662247827602-2f1927e81c81?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxzcGljZXMlMjBtYXJrZXR8ZW58MHx8fHwxNzY1Nzk4ODE3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "spices market"
+    },
+    {
+      "id": "shop-1",
+      "description": "Exterior of Merkato General Store.",
+      "imageUrl": "https://images.unsplash.com/photo-1744748208552-4592da29b8fe?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxtYXJrZXQlMjBzdGFsbHxlbnwwfHx8fDE3NjU3NzY5Mzd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "market stall"
+    },
+    {
+      "id": "shop-2",
+      "description": "Exterior of Bole Fresh Goods.",
+      "imageUrl": "https://images.unsplash.com/photo-1601598851547-4302969d0614?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxncm9jZXJ5JTIwc3RvcmV8ZW58MHx8fHwxNzY1ODAwMzM0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "grocery store"
+    },
+    {
+      "id": "shop-3",
+      "description": "Exterior of Piassa Spice Corner.",
+      "imageUrl": "https://images.unsplash.com/photo-1666017525063-cf8dd5dfdf89?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxzcGljZSUyMHNob3B8ZW58MHx8fHwxNzY1ODAwMzM0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "spice shop"
+    }
+  ]
 }
