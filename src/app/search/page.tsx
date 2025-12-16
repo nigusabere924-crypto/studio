@@ -1,7 +1,7 @@
 import { translateAndUnderstandSearchQuery } from '@/ai/flows/translate-and-understand-search-query';
 import ProductList from '@/components/product-list';
 import { getProducts, Product, Shop } from '@/lib/data';
-import { Bot, Search, Languages } from 'lucide-react';
+import { Bot, Search, Languages, ServerCrash } from 'lucide-react';
 import Link from 'next/link';
 
 type ProductWithShop = Product & { shop: Shop };
@@ -27,17 +27,24 @@ export default async function SearchPage({
           .split(',')
           .map((term) => term.trim())
           .filter(Boolean);
+
         if (searchTerms.length > 0) {
           products = allProducts.filter((p) => {
             const productName = p.name.toLowerCase();
             return searchTerms.some((term) => productName.includes(term));
           });
         }
+        
+        // Fallback: If AI keywords yield no results, try searching the translated query directly.
+        if (products.length === 0 && aiResponse.translatedQuery) {
+          const fallbackTerm = aiResponse.translatedQuery.toLowerCase().trim();
+          products = allProducts.filter(p => p.name.toLowerCase().includes(fallbackTerm));
+        }
       }
     } catch (error) {
       console.error('Error during AI-powered search:', error);
       searchError = true;
-      // As a fallback, perform a simple keyword search on the original query
+      // Fallback to a simple keyword search on the original query if AI fails
       const allProducts = getProducts();
       products = allProducts.filter(p => p.name.toLowerCase().includes(query.toLowerCase()));
     }
@@ -70,7 +77,8 @@ export default async function SearchPage({
           Your Search: "{query}"
         </h2>
         {searchError ? (
-           <div className="text-destructive text-sm">
+           <div className="text-destructive text-sm flex items-center gap-2">
+             <ServerCrash className="h-4 w-4" />
              Could not connect to the AI search service. Showing basic results.
            </div>
         ) : (
@@ -89,7 +97,7 @@ export default async function SearchPage({
               <div>
                 <h3 className="font-semibold">AI Understood Query</h3>
                 <p className="text-muted-foreground">
-                  {aiResponse?.understoodQuery ?? '...'}
+                  {aiResponse?.understoodQuery || (products.length > 0 ? '(Used translated query for search)' : 'Could not identify specific products.')}
                 </p>
               </div>
             </div>
