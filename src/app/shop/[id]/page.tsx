@@ -1,86 +1,84 @@
-import Image from 'next/image';
-import { notFound } from 'next/navigation';
 import { getShopById, getProductsByShopId } from '@/lib/data';
-import { Clock, Phone, CreditCard, MapPin, ExternalLink } from 'lucide-react';
-import ProductCard from '@/components/product-card';
-import { Badge } from '@/components/ui/badge';
+import { notFound } from 'next/navigation';
+import Image from 'next/image';
+import ProductList from '@/components/product-list';
+import ShopReviews from '@/components/shop-reviews';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
-export default function ShopPage({ params }: { params: { id: string } }) {
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Phone, Clock, CreditCard, MapPin } from 'lucide-react';
+
+export default function ShopDetailPage({
+  params,
+}: {
+  params: { id: string };
+}) {
   const shop = getShopById(params.id);
 
   if (!shop) {
     notFound();
   }
 
-  const products = getProductsByShopId(params.id).map(p => ({...p, shop}));
+  const products = getProductsByShopId(params.id);
+  const productsWithShop = products.map(p => ({ ...p, shop }));
+  const googleMapsUrl = `https://www.google.com/maps?q=${shop.location.lat},${shop.location.lng}`;
 
   return (
-    <div className="space-y-12">
-      <div className="relative h-64 w-full rounded-lg overflow-hidden">
-        <Image
-          src={shop.imageUrl}
-          alt={`Exterior of ${shop.name}`}
-          fill
-          className="object-cover"
-          data-ai-hint={shop.imageHint}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-        <h1 className="font-headline text-5xl font-bold text-white absolute bottom-6 left-6">
-          {shop.name}
-        </h1>
-      </div>
-
-      <div className="grid md:grid-cols-3 gap-8">
-        <div className="md:col-span-1 space-y-6">
-          <h2 className="font-headline text-2xl font-semibold">Shop Details</h2>
-          <div className="space-y-4 text-muted-foreground">
-            <div className="flex items-start gap-3">
-              <MapPin className="h-5 w-5 text-primary mt-1" />
-              <span>{shop.address}</span>
-            </div>
-            <div className="flex items-start gap-3">
-              <Clock className="h-5 w-5 text-primary mt-1" />
-              <span>{shop.operatingHours}</span>
-            </div>
-            <div className="flex items-start gap-3">
-              <Phone className="h-5 w-5 text-primary mt-1" />
-              <span>{shop.contact}</span>
-            </div>
-            <div className="flex items-start gap-3">
-              <CreditCard className="h-5 w-5 text-primary mt-1" />
-              <div className="flex flex-wrap gap-2">
-                {shop.paymentOptions.map((option) => (
-                  <Badge key={option} variant="secondary">{option}</Badge>
-                ))}
-              </div>
-            </div>
+    <div className="space-y-8">
+      <Card>
+        <div className="grid md:grid-cols-3 gap-6">
+          <div className="md:col-span-1">
+            <Image
+              src={shop.imageUrl}
+              alt={shop.name}
+              width={400}
+              height={400}
+              className="object-cover rounded-t-lg md:rounded-l-lg md:rounded-t-none w-full h-full"
+            />
           </div>
-          <Button asChild className="w-full bg-accent hover:bg-accent/90">
-            <a
-              href={`https://www.google.com/maps?q=${shop.location.lat},${shop.location.lng}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Get Directions
-              <ExternalLink className="ml-2 h-4 w-4" />
-            </a>
-          </Button>
+          <div className="md:col-span-2">
+            <CardHeader>
+              <CardTitle className="text-3xl font-headline">{shop.name}</CardTitle>
+              <CardDescription>{shop.address}</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+                <div className="flex items-center gap-2 text-sm">
+                  <Clock className="h-4 w-4 text-muted-foreground" />
+                  <span>{shop.operatingHours}</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <Phone className="h-4 w-4 text-muted-foreground" />
+                  <span>{shop.contact}</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <CreditCard className="h-4 w-4 text-muted-foreground" />
+                  <span>{shop.paymentOptions.join(', ')}</span>
+                </div>
+                <Button asChild className="mt-4">
+                  <Link href={googleMapsUrl} target="_blank" rel="noopener noreferrer">
+                    <MapPin className="mr-2 h-4 w-4" />
+                    Get Directions
+                  </Link>
+                </Button>
+            </CardContent>
+          </div>
         </div>
+      </Card>
 
-        <div className="md:col-span-2">
-          <h2 className="font-headline text-2xl font-semibold mb-6">Products Available</h2>
-          {products.length > 0 ? (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                {products.map((product) => (
-                    <ProductCard key={product.id} product={product} />
-                ))}
-            </div>
-          ) : (
-            <p className="text-muted-foreground">This shop has not listed any products yet.</p>
-          )}
-        </div>
+      <ShopReviews reviews={shop.reviews} />
+
+      <div>
+        <h2 className="text-2xl font-headline font-semibold mb-4">Products Available</h2>
+        <ProductList initialProducts={productsWithShop} />
       </div>
+
     </div>
   );
 }

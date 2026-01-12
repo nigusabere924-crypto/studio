@@ -1,25 +1,30 @@
 import { translateAndUnderstandSearchQuery } from '@/ai/flows/translate-and-understand-search-query';
 import ProductList from '@/components/product-list';
 import { getProducts, Product, Shop } from '@/lib/data';
-import { Bot, Search, Languages, ServerCrash } from 'lucide-react';
+import { Bot, Search, Languages, ServerCrash, Map, List } from 'lucide-react';
 import Link from 'next/link';
+import MapView from '@/components/map-view';
+import { getShops } from '@/lib/data';
 
 type ProductWithShop = Product & { shop: Shop };
 
 export default async function SearchPage({
   searchParams,
 }: {
-  searchParams: { q?: string };
+  searchParams: { q?: string; view?: string };
 }) {
   const query = searchParams.q || '';
+  const view = searchParams.view || 'list';
   let aiResponse: { translatedQuery: string; understoodQuery: string } | null = null;
   let products: ProductWithShop[] = [];
+  let shops: Shop[] = [];
   let searchError = false;
 
   if (query) {
     try {
       aiResponse = await translateAndUnderstandSearchQuery({ query });
       const allProducts = getProducts();
+      const allShops = getShops();
 
       if (aiResponse && aiResponse.understoodQuery) {
         const searchTerms = aiResponse.understoodQuery
@@ -35,18 +40,23 @@ export default async function SearchPage({
           });
         }
         
-        // Fallback: If AI keywords yield no results, try searching the translated query directly.
         if (products.length === 0 && aiResponse.translatedQuery) {
           const fallbackTerm = aiResponse.translatedQuery.toLowerCase().trim();
           products = allProducts.filter(p => p.name.toLowerCase().includes(fallbackTerm));
         }
       }
+
+      const shopIds = [...new Set(products.map(p => p.shopId))];
+      shops = allShops.filter(s => shopIds.includes(s.id));
+
     } catch (error) {
       console.error('Error during AI-powered search:', error);
       searchError = true;
-      // Fallback to a simple keyword search on the original query if AI fails
       const allProducts = getProducts();
+      const allShops = getShops();
       products = allProducts.filter(p => p.name.toLowerCase().includes(query.toLowerCase()));
+      const shopIds = [...new Set(products.map(p => p.shopId))];
+      shops = allShops.filter(s => shopIds.includes(s.id));
     }
   }
 
@@ -104,7 +114,17 @@ export default async function SearchPage({
           </div>
         )}
       </div>
-      <ProductList initialProducts={products} />
+
+      <div className="flex justify-end mb-4">
+        <Link href={`/search?q=${query}&view=list`} className={`p-2 ${view === 'list' ? 'bg-primary text-primary-foreground' : 'bg-card'}`}>
+          <List className="h-5 w-5" />
+        </Link>
+        <Link href={`/search?q=${query}&view=map`} className={`p-2 ${view === 'map' ? 'bg-primary text-primary-foreground' : 'bg-card'}`}>
+          <Map className="h-5 w-5" />
+        </Link>
+      </div>
+
+      {view === 'map' ? <MapView shops={shops} /> : <ProductList initialProducts={products} />}
     </div>
   );
 }

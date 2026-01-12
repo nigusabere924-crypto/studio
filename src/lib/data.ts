@@ -12,6 +12,14 @@ export interface Product {
   imageHint: string;
 }
 
+export interface Review {
+  id: string;
+  author: string;
+  rating: number; // 1-5
+  comment: string;
+  date: string;
+}
+
 export interface Shop {
   id: string;
   name:string;
@@ -25,6 +33,7 @@ export interface Shop {
   paymentOptions: string[];
   imageUrl: string;
   imageHint: string;
+  reviews: Review[];
 }
 
 const SHOPS: Shop[] = generateShops();

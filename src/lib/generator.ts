@@ -1,5 +1,35 @@
-import { Shop, Product } from './data';
+import { Shop, Product, Review } from './data';
 import { PlaceHolderImages } from './placeholder-images';
+
+// --- Mock Data for Reviews ---
+const reviewAuthors = ["Alex T.", "Sara K.", "Mikey B.", "Jemal A.", "Hana G.", "Dawit S.", "Liya M.", "Abel W.", "Eden F.", "Yosef H."];
+const reviewComments = [
+  "Great selection and fair prices. Staff is very helpful.",
+  "My go-to place for weekly groceries. Always fresh produce.",
+  "A bit crowded on weekends, but worth it for the quality.",
+  "Prices are a little high, but the quality is unmatched.",
+  "Good variety of products. Wish they had more international brands.",
+  "Excellent customer service! They always greet you with a smile.",
+  "Clean, organized, and easy to find what you need.",
+  "Could be better. Some items were out of stock.",
+  "Found everything I was looking for. A pleasant shopping experience.",
+  "The best coffee beans in the city! Highly recommend."
+];
+
+function generateReviews(): Review[] {
+  const reviews: Review[] = [];
+  const numReviews = Math.floor(Math.random() * 8); // 0 to 7 reviews
+  for (let i = 0; i < numReviews; i++) {
+    reviews.push({
+      id: `rev-${Date.now()}-${i}`,
+      author: getRandomElement(reviewAuthors),
+      rating: Math.floor(Math.random() * 2) + 4, // 4 or 5 stars
+      comment: getRandomElement(reviewComments),
+      date: new Date(Date.now() - Math.floor(Math.random() * 30) * 86400000).toISOString().split('T')[0], // Random date in the last 30 days
+    });
+  }
+  return reviews;
+}
 
 const shopNames = [
   "Merkato Market", "Bole Savanna", "Piassa Corner", "Saris Souk", "Ayat Emporium", 
@@ -122,6 +152,7 @@ export function generateShops(): Shop[] {
       paymentOptions: getRandomSubset(paymentOptions, Math.floor(Math.random() * 3) + 1),
       imageUrl: shopImage.imageUrl,
       imageHint: shopImage.imageHint,
+      reviews: generateReviews(),
     });
   }
   return shops;

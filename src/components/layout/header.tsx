@@ -1,5 +1,10 @@
+import ClientOnly from '../client-only';
 import HeaderContent from './header-content';
 
 export default function Header() {
-  return <HeaderContent />;
+  return (
+    <ClientOnly>
+      <HeaderContent />
+    </ClientOnly>
+  );
 }
